@@ -23,7 +23,7 @@ const widgetPreview = "large"
 const imageBackground = true
 
 // Set to true to reset the widget's background image.
-const forceImageUpdate = false
+const forceImageUpdate = true
 
 // Set the padding around each item. Default is 5.
 const padding = 5
