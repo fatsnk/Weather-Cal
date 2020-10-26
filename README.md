@@ -1,6 +1,6 @@
 # 简要中文说明
-![Image text](https://github.com/fatsnk/myconflist/raw/master/sample_img/IMG_0017(20201026-173735).PNG)(https://github.com/fatsnk/myconflist/raw/master/sample_img/IMG_0018(20201026-173758).PNG)
-
+(https://github.com/fatsnk/myconflist/raw/master/sample_img/IMG_0017(20201026-173735).PNG)(https://github.com/fatsnk/myconflist/raw/master/sample_img/IMG_0018(20201026-173758).PNG)
+<img src="https://github.com/fatsnk/myconflist/raw/master/sample_img/IMG_0017(20201026-173735).PNG"  height="330" width="495">
 
 
 
