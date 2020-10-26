@@ -1,3 +1,6 @@
+// Variables used by Scriptable.
+// These must be at the very top of the file. Do not edit.
+// icon-color: teal; icon-glyph: calendar-alt;
 /*
  * SETUP
  * Use this section to set up the widget.
@@ -8,7 +11,7 @@
 const apiKey = ""
 
 // Set the locale code. Leave blank "" to match the device's locale. You can change the hard-coded text strings in the TEXT section below.
-let locale = "en"
+let locale = ""
 
 // Set to true for fixed location, false to update location as you move around
 const lockLocation = true
@@ -20,7 +23,7 @@ const widgetPreview = "large"
 const imageBackground = true
 
 // Set to true to reset the widget's background image.
-const forceImageUpdate = false
+const forceImageUpdate = true
 
 // Set the padding around each item. Default is 5.
 const padding = 5
@@ -58,6 +61,9 @@ const items = [
 
      column,
      events,
+     
+     column,
+     events3,
   
 ]
 
@@ -106,7 +112,7 @@ const eventSettings = {
   ,showCalendarColor: "rectangle left"
   
   // When no events remain, show a hard-coded "message", a "greeting", or "none".
-  ,noEventBehavior: "message"
+  ,noEventBehavior: "greeting"
 }
 
 // SUNRISE
@@ -122,7 +128,7 @@ const sunriseSettings = {
 const weatherSettings = {
 
   // Set to imperial for Fahrenheit, or metric for Celsius
-  units: "imperial"
+  units: "metric"
   
   // Show the location of the current weather.
   ,showLocation: false
@@ -179,6 +185,7 @@ const textFormat = {
   greeting:    { size: 30, color: "", font: "semibold" },
   eventLabel:  { size: 14, color: "", font: "semibold" },
   eventTitle:  { size: 14, color: "", font: "semibold" },
+  eventTitle3:  { size: 14, color: "ff3030", font: "semibold" },
   eventTime:   { size: 14, color: "ffffffcc", font: "" },
   noEvents:    { size: 30, color: "", font: "semibold" },
   
@@ -202,7 +209,7 @@ const textFormat = {
 if (locale == "" || locale == null) { locale = Device.locale() }
 
 // Declare the data variables.
-var eventData, locationData, sunData, weatherData
+var eventData, eventData3, locationData, sunData, weatherData
 
 // Create global constants.
 const currentDate = new Date()
@@ -477,6 +484,13 @@ function alignRight(alignmentStack) {
   return returnStack
 }
 
+// Create a right-aligned 无空行stack.
+function alignRight1(alignmentStack) {
+//   alignmentStack.addSpacer()
+  let returnStack = alignmentStack.addStack()
+  return returnStack
+}
+
 // Create a left-aligned stack.
 function alignLeft(alignmentStack) {
   let returnStack = alignmentStack.addStack()
@@ -592,6 +606,74 @@ async function setupEvents() {
   eventData.eventsAreVisible = (futureEvents.length > 0) && (eventSettings.numberOfEvents > 0)
 }
 
+// Set up the eventData3 object.
+async function setupEvents3() {
+  
+  eventData3 = {}
+  const calendars = eventSettings.selectCalendars
+  const numberOfEvents = eventSettings.numberOfEvents
+/*
+  // Function to determine if an event should be shown.
+  function shouldShowEvent(event) {
+  
+    // If events are filtered and the calendar isn't in the selected calendars, return false.
+    if (calendars.length && !calendars.includes(event.calendar.title)) { return false }
+
+    // Hack to remove canceled Office 365 events.
+    if (event.title.startsWith("Canceled:")) { return false }
+
+    // If it's an all-day event, only show if the setting is active.
+    if (event.isAllDay) { return eventSettings.showAllDay }
+
+    // Otherwise, return the event if it's in the future.
+    return (event.startDate.getTime() > currentDate.getTime())
+  }
+*/  
+  // Determine which events to show, and how many.
+  const todayEvents = await CalendarEvent.today([])
+  let shownEvents = 0
+  let futureEvents = []
+//   futureEvents.push(event)
+/*  
+  for (const event of todayEvents) {
+    if (shownEvents == numberOfEvents) { break }
+    if (shouldShowEvent(event)) {
+      futureEvents.push(event)
+      shownEvents++
+    }
+  }
+*/  
+/*
+  // If there's room and we need to, show tomorrow's events.
+  let multipleTomorrowEvents = false
+  if (eventSettings.showTomorrow && shownEvents < numberOfEvents) {
+  
+    const tomorrowEvents = await CalendarEvent.tomorrow([])
+    for (const event of tomorrowEvents) {
+      if (shownEvents == numberOfEvents) { break }
+      if (shouldShowEvent(event)) {
+      
+        // Add the tomorrow label prior to the first tomorrow event.
+        if (!multipleTomorrowEvents) { 
+          
+          // The tomorrow label is pretending to be an event.
+          futureEvents.push({ title: localizedText.tomorrowLabel.toUpperCase(), isLabel: true })
+          multipleTomorrowEvents = true
+        }
+        
+        // Show the tomorrow event and increment the counter.
+        futureEvents.push(event)
+        shownEvents++
+      }
+    }
+  }
+  */
+  // Store the future events, and whether or not any events are displayed.
+  eventData3.futureEvents = futureEvents
+  eventData3.eventsAreVisible = true
+  
+}
+
 // Set up the gradient for the widget background.
 async function setupGradient() {
   
@@ -644,7 +726,7 @@ async function setupGradient() {
 
   // In the 30min before/after, use dawn/twilight.
   if (closeTo(sunrise)<=45 && utcTime < sunrise) { return gradient.dawn }
-  if (closeTo(sunset)<=45 && utcTime > sunset) { return gradient.twilight }
+//    if (closeTo(sunset)<=45 && utcTime > sunset) { return gradient.twilight }
 
   // Otherwise, if it's night, return night.
   if (isNight(currentDate)) { return gradient.night }
@@ -938,6 +1020,179 @@ async function events(column) {
     const timeStack = align(currentStack)
     const time = provideText(timeText, timeStack, textFormat.eventTime)
     timeStack.setPadding(0, padding, padding, padding)
+  }
+}
+
+// Display events3 on the widget.
+async function events3(column) {
+
+  // Requirements: events
+  if (!eventData3) { await setupEvents3() }
+/*
+  // If no events are visible, figure out what to do.
+  if (!eventData.eventsAreVisible) { 
+    const display = eventSettings.noEventBehavior
+    
+    // If it's a greeting, let the greeting function handle it.
+    if (display == "greeting") { return await greeting(column) }
+    
+    // If it's a message, get the localized text.
+    if (display == "message" && localizedText.noEventMessage.length) {
+      const messageStack = align(column)
+      messageStack.setPadding(padding, padding, padding, padding)
+      provideText(localizedText.noEventMessage, messageStack, textFormat.noEvents)
+    }
+    
+    // Whether or not we displayed something, return here.
+    return
+  }
+*/
+    
+  // Set up the event stack.
+    let eventStack = column.addStack()
+     eventStack.layoutVertically()
+   const todaySeconds = Math.floor(currentDate.getTime() / 1000) - 978307200
+//    eventStack.url = 'calshow:' + todaySeconds
+  
+/*  
+  // If there are no events and we have a message, show it and return.
+  if (!eventData.eventsAreVisible && localizedText.noEventMessage.length) {
+    let message = provideText(localizedText.noEventMessage, eventStack, textFormat.noEvents)
+//     eventStack.setPadding(padding, padding, padding, padding)
+    return
+  }
+*/  
+  
+  // If we're not showing the message, don't pad the event stack.
+//    eventStack.setPadding(0, 0, 0, 0)
+
+// 这是一个提醒事项的脚本var reminder = Pasteboard.pasteString();
+const NOW = new Date();
+var rmstr;
+Date.prototype.format = function(fmt) { 
+     var o = { 
+        "M+" : this.getMonth()+1,                 //月份 
+        "d+" : this.getDate(),                    //日 
+        "h+" : this.getHours(),                   //小时 
+        "m+" : this.getMinutes(),                 //分 
+        "s+" : this.getSeconds(),                 //秒 
+        "q+" : Math.floor((this.getMonth()+3)/3), //季度 
+        "S"  : this.getMilliseconds()             //毫秒 
+    }; 
+    if(/(y+)/.test(fmt)) {
+            fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length)); 
+    }
+     for(var k in o) {
+        if(new RegExp("("+ k +")").test(fmt)){
+             fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+         }
+     }
+    return fmt; 
+}       
+
+
+
+let all = await Reminder.allDueThisWeek();
+for (let r of all) {
+  if(r.isCompleted == false){
+    rmstr = r.dueDate.format("⭕️MM月dd日hh:mm") + ' \n '+r.title;
+    console.log(rmstr);
+     // 添加每个提醒事项to the stack.
+    var currentStack = eventStack
+    const titleStack = alignRight1(currentStack)
+    titleStack.layoutHorizontally()
+//     const title = provideText(rmstr, titleStack, textFormat.eventTitle)
+    const title = provideText(rmstr, titleStack, r.dueDate <= currentDate ? textFormat.eventTitle3:textFormat.eventTitle)
+    titleStack.setPadding(padding, padding, padding/5, padding)
+  }
+//     if (r.title == reminder){
+//       r.isCompleted = true;
+//       r.remove();
+    
+}
+
+  
+  // Add each event to the stack.
+    
+    
+  const futureEvents = eventData3.futureEvents
+  
+  for (let i = 0; i < futureEvents.length; i++) {
+    
+    const event = futureEvents[i]
+//     const event = new CalendarEvent()
+    const bottomPadding = (padding-10 < 0) ? 0 : padding-10
+    
+/* // If it's the tomorrow label, change to the tomorrow stack.
+    if (event.isLabel) {
+      let tomorrowStack = column.addStack()
+      tomorrowStack.layoutVertically()
+      const tomorrowSeconds = Math.floor(currentDate.getTime() / 1000) - 978220800
+      tomorrowStack.url = 'calshow:' + tomorrowSeconds
+      currentStack = tomorrowStack
+      
+      // Mimic the formatting of an event title, mostly.
+      const eventLabelStack = align(currentStack)
+      const eventLabel = provideText(event.title, eventLabelStack, textFormat.eventLabel)
+       eventLabelStack.setPadding(padding, padding, padding, padding)
+      continue
+    }
+*/    
+     const titleStack = align(currentStack)
+     titleStack.layoutHorizontally()
+    const showCalendarColor = eventSettings.showCalendarColor
+    const colorShape = showCalendarColor.includes("circle") ? "circle" : "rectangle"
+    
+    // If we're showing a color, and it's not shown on the right, add it to the left.
+    if (showCalendarColor.length && !showCalendarColor.includes("right")) {
+      let colorItemText = provideTextSymbol(colorShape) + " "
+       let colorItem = provideText(colorItemText, titleStack, textFormat.eventTitle)
+       colorItem.textColor = event.calendar.color
+    }
+  
+//    const title = provideText(event.title.trim(), titleStack, textFormat.eventTitle)
+
+
+
+
+
+// const title = provideText("event.title.trim()", titleStack, textFormat.eventTitle)
+// titleStack.setPadding(padding, padding, event.isAllDay ? padding : padding/5, padding)
+    
+    // If we're showing a color on the right, show it.
+    if (showCalendarColor.length && showCalendarColor.includes("right")) {
+      let colorItemText = " " + provideTextSymbol(colorShape)
+      let colorItem = provideText(colorItemText, titleStack, textFormat.eventTitle)
+      colorItem.textColor = event.calendar.color
+    }
+  
+    // If there are too many events, limit the line height.
+    if (futureEvents.length >= 3) { title.lineLimit = 1 }
+
+    // If it's an all-day event, we don't need a time.
+//     if (event.isAllDay) { continue }
+    
+    // Format the time information.
+    let timeText = formatTime(event.startDate)
+    
+    // If we show the length as time, add an en dash and the time.
+    if (eventSettings.showEventLength == "time") { 
+      timeText += "–" + formatTime(event.endDate) 
+      
+    // If we should it as a duration, add the minutes.
+    } else if (eventSettings.showEventLength == "duration") {
+      const duration = (event.endDate.getTime() - event.startDate.getTime()) / (1000*60)
+      const hours = Math.floor(duration/60)
+      const minutes = Math.floor(duration % 60)
+      const hourText = hours>0 ? hours + localizedText.durationHour : ""
+      const minuteText = minutes>0 ? minutes + localizedText.durationMinute : ""
+      const showSpace = hourText.length && minuteText.length
+      timeText += " \u2022 " + hourText + (showSpace ? " " : "") + minuteText
+    }
+
+     const timeStack = align(currentStack)
+     const time = provideText(timeText, timeStack, textFormat.eventTime)
+     timeStack.setPadding(0, padding, padding, padding)
   }
 }
 
