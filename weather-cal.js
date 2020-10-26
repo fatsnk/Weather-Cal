@@ -1103,7 +1103,7 @@ for (let r of all) {
     titleStack.layoutHorizontally()
 //     const title = provideText(rmstr, titleStack, textFormat.eventTitle)
     const title = provideText(rmstr, titleStack, r.dueDate <= currentDate ? textFormat.eventTitle3:textFormat.eventTitle)
-    titleStack.setPadding(padding, padding, padding/5, padding)
+    titleStack.setPadding(padding, 0, padding/5, 0)
   }
 //     if (r.title == reminder){
 //       r.isCompleted = true;
