@@ -1,7 +1,7 @@
 # 简要中文说明
 ## 效果图：
 用于Scriptable的脚本，Scriptable可以在appstore中免费下载。该脚本可以生成一个显示多种信息的iOS14桌面小组件。  
-相比原项目，该分支在右下角增加了提醒事项的显示。如图，默认左上是日期，右上是天气，左下是日历日程，右下是提醒事项。  
+相比原项目，此分支在右下角增加了提醒事项的显示。如图，默认左上是日期，右上是天气，左下是日历日程，右下是提醒事项。  
 <table>
 <tr>
 <td><img src="https://github.com/fatsnk/myconflist/raw/master/sample_img/IMG_0017(20201026-173735).PNG" width = "300" /></td>
