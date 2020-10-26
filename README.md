@@ -1,3 +1,13 @@
+# 简要中文说明
+![Image text](https://github.com/fatsnk/myconflist/raw/master/sample_img/IMG_0017(20201026-173735).PNG)(https://github.com/fatsnk/myconflist/raw/master/sample_img/IMG_0018(20201026-173758).PNG)
+
+
+
+
+
+
+
+
 # Weather Cal
 This is a Scriptable widget that lets you display, position, and format multiple elements, including dates and events, weather information, battery level, and more. Make sure to read through the "Before you start" and "Setting up your widget" sections below. If you want to write code to make your own custom widget item, head to "Technical details". Happy scripting! 
 
