@@ -1,7 +1,7 @@
 # 简要中文说明
 ## 效果图：
-用于Scriptable的脚本，Scriptable可以在appstore中免费下载。该脚本可以生成一个显示多种信息的iOS14桌面小组件。
-相比原项目，该分支在右下角增加了提醒事项的显示。如图，默认左上是日期，右上是天气，左下是日历日程，右下是提醒事项。
+用于Scriptable的脚本，Scriptable可以在appstore中免费下载。该脚本可以生成一个显示多种信息的iOS14桌面小组件。  
+相比原项目，该分支在右下角增加了提醒事项的显示。如图，默认左上是日期，右上是天气，左下是日历日程，右下是提醒事项。  
 <table>
 <tr>
 <td><img src="https://github.com/fatsnk/myconflist/raw/master/sample_img/IMG_0017(20201026-173735).PNG" width = "300" /></td>
@@ -12,11 +12,11 @@
 </table>
 
 ## 使用方法：
-将js文件导入到Scriptable。要显示天气，需到https://home.openweathermap.org注册该网站的会员，注册成功后你的注册邮箱会收到该网站发来的 api key，将改key填入const apiKey = ""的引号中。
-将forceImageUpdate 修改为true可以重设背景图片；
-修改imageBackground可以设置是否显示背景图片；
-在 * LAYOUT 段落，可以调整各项的显示布局；
-在 * ITEM SETTINGS 段落，可以对各项进行一些偏好设置；
+将js文件导入到Scriptable。要显示天气，需到https://home.openweathermap.org注册该网站的会员，注册成功后你的注册邮箱会收到该网站发来的 api key，将改key填入const apiKey = ""的引号中。＜/br＞
+将forceImageUpdate 修改为true可以重设背景图片；＜/br＞
+修改imageBackground可以设置是否显示背景图片；＜/br＞
+在 * LAYOUT 段落，可以调整各项的显示布局；＜/br＞
+在 * ITEM SETTINGS 段落，可以对各项进行一些偏好设置；＜/br＞
 详情见原作者的说明和代码中各项的注释。
 
 # Weather Cal
