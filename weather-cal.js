@@ -23,7 +23,7 @@ const widgetPreview = "large"
 const imageBackground = true
 
 // Set to true to reset the widget's background image.
-const forceImageUpdate = true
+const forceImageUpdate = false
 
 // Set the padding around each item. Default is 5.
 const padding = 5
@@ -484,7 +484,7 @@ function alignRight(alignmentStack) {
   return returnStack
 }
 
-// Create a right-aligned 无空行stack.
+// Create a right-aligned 鏃犵┖琛宻tack.
 function alignRight1(alignmentStack) {
 //   alignmentStack.addSpacer()
   let returnStack = alignmentStack.addStack()
@@ -1004,7 +1004,7 @@ async function events(column) {
     
     // If we show the length as time, add an en dash and the time.
     if (eventSettings.showEventLength == "time") { 
-      timeText += "–" + formatTime(event.endDate) 
+      timeText += "鈥? + formatTime(event.endDate) 
       
     // If we should it as a duration, add the minutes.
     } else if (eventSettings.showEventLength == "duration") {
@@ -1066,18 +1066,18 @@ async function events3(column) {
   // If we're not showing the message, don't pad the event stack.
 //    eventStack.setPadding(0, 0, 0, 0)
 
-// 这是一个提醒事项的脚本var reminder = Pasteboard.pasteString();
+// 杩欐槸涓€涓彁閱掍簨椤圭殑鑴氭湰var reminder = Pasteboard.pasteString();
 const NOW = new Date();
 var rmstr;
 Date.prototype.format = function(fmt) { 
      var o = { 
-        "M+" : this.getMonth()+1,                 //月份 
-        "d+" : this.getDate(),                    //日 
-        "h+" : this.getHours(),                   //小时 
-        "m+" : this.getMinutes(),                 //分 
-        "s+" : this.getSeconds(),                 //秒 
-        "q+" : Math.floor((this.getMonth()+3)/3), //季度 
-        "S"  : this.getMilliseconds()             //毫秒 
+        "M+" : this.getMonth()+1,                 //鏈堜唤 
+        "d+" : this.getDate(),                    //鏃?
+        "h+" : this.getHours(),                   //灏忔椂 
+        "m+" : this.getMinutes(),                 //鍒?
+        "s+" : this.getSeconds(),                 //绉?
+        "q+" : Math.floor((this.getMonth()+3)/3), //瀛ｅ害 
+        "S"  : this.getMilliseconds()             //姣 
     }; 
     if(/(y+)/.test(fmt)) {
             fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length)); 
@@ -1095,15 +1095,17 @@ Date.prototype.format = function(fmt) {
 let all = await Reminder.allDueThisWeek();
 for (let r of all) {
   if(r.isCompleted == false){
-    rmstr = r.dueDate.format("⭕️MM月dd日hh:mm") + ' \n '+r.title;
+    rmstr = r.dueDate.format("猸曪笍MM鏈坉d鏃h:mm") + ' \n '+""+r.title;
     console.log(rmstr);
-     // 添加每个提醒事项to the stack.
+     // 娣诲姞姣忎釜鎻愰啋浜嬮」to the stack.
     var currentStack = eventStack
     const titleStack = alignRight1(currentStack)
     titleStack.layoutHorizontally()
 //     const title = provideText(rmstr, titleStack, textFormat.eventTitle)
     const title = provideText(rmstr, titleStack, r.dueDate <= currentDate ? textFormat.eventTitle3:textFormat.eventTitle)
+//     titleStack.setPadding(padding, padding, 0, padding)
     titleStack.setPadding(padding, 0, padding/5, 0)
+//     titleStack.centerAlignContent()
   }
 //     if (r.title == reminder){
 //       r.isCompleted = true;
@@ -1177,7 +1179,7 @@ for (let r of all) {
     
     // If we show the length as time, add an en dash and the time.
     if (eventSettings.showEventLength == "time") { 
-      timeText += "–" + formatTime(event.endDate) 
+      timeText += "鈥? + formatTime(event.endDate) 
       
     // If we should it as a duration, add the minutes.
     } else if (eventSettings.showEventLength == "duration") {
@@ -1232,7 +1234,7 @@ async function current(column) {
   // Show the current temperature.
   const tempStack = align(currentWeatherStack)
   tempStack.setPadding(0, padding, 0, padding)
-  const tempText = Math.round(weatherData.currentTemp) + "°"
+  const tempText = Math.round(weatherData.currentTemp) + "掳"
   const temp = provideText(tempText, tempStack, textFormat.largeTemp)
   
   // If we're not showing the high and low, end it here.
@@ -1306,7 +1308,7 @@ async function future(column) {
   
   // The next part of the display changes significantly for next hour vs tomorrow.
   if (showNextHour) {
-    const subTempText = Math.round(weatherData.nextHourTemp) + "°"
+    const subTempText = Math.round(weatherData.nextHourTemp) + "掳"
     const subTemp = provideText(subTempText, subConditionStack, textFormat.smallTemp)
     
   } else {
