@@ -1,9 +1,9 @@
 # 简要中文说明
 
-<img src="https://github.com/fatsnk/myconflist/raw/master/sample_img/IMG_0017(20201026-173735).PNG" style="zoom:25%" />
-<img src="https://github.com/fatsnk/myconflist/raw/master/sample_img/IMG_0018(20201026-173758).PNG" style="zoom:25%" />
-<img src="https://github.com/fatsnk/myconflist/raw/master/sample_img/IMG_0019(20201026-173932).PNG" style="zoom:25%" />
-<img src="https://github.com/fatsnk/myconflist/raw/master/sample_img/IMG_0020(20201026-174341).PNG" style="zoom:25%" />
+<img src="https://github.com/fatsnk/myconflist/raw/master/sample_img/IMG_0017(20201026-173735).PNG" style="zoom:5%" />
+<img src="https://github.com/fatsnk/myconflist/raw/master/sample_img/IMG_0018(20201026-173758).PNG" style="zoom:5%" />
+<img src="https://github.com/fatsnk/myconflist/raw/master/sample_img/IMG_0019(20201026-173932).PNG" style="zoom:5%" />
+<img src="https://github.com/fatsnk/myconflist/raw/master/sample_img/IMG_0020(20201026-174341).PNG" style="zoom:5%" />
 
 
 
