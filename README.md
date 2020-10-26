@@ -12,11 +12,11 @@
 </table>
 
 ## 使用方法：
-将js文件导入到Scriptable。要显示天气，需到https://home.openweathermap.org注册该网站的会员，注册成功后你的注册邮箱会收到该网站发来的 api key，将改key填入const apiKey = ""的引号中。＜/br＞
-将forceImageUpdate 修改为true可以重设背景图片；＜/br＞
-修改imageBackground可以设置是否显示背景图片；＜/br＞
-在 * LAYOUT 段落，可以调整各项的显示布局；＜/br＞
-在 * ITEM SETTINGS 段落，可以对各项进行一些偏好设置；＜/br＞
+将js文件导入到Scriptable。要显示天气，需到 https://home.openweathermap.org 注册该网站的会员，注册成功后你的注册邮箱会收到该网站发来的 api key，将改key填入const apiKey = ""的引号中。  
+将forceImageUpdate 修改为true可以重设背景图片；  
+修改imageBackground可以设置是否显示背景图片；  
+在 * LAYOUT 段落，可以调整各项的显示布局；  
+在 * ITEM SETTINGS 段落，可以对各项进行一些偏好设置；  
 详情见原作者的说明和代码中各项的注释。
 
 # Weather Cal
